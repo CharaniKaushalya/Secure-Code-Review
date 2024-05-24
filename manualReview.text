@@ -1,0 +1,53 @@
+line by line code review for vulnerability and recommendations
+
+1.  from flask import Flask, request, render_template_string
+    import sqlite3
+
+    *) Security Concern & recommendation : render_template_string can be a threat if user input is fixed within the template string.By using render_template with HTML files.
+
+2.  username = request.form['username']
+    password = request.form['password']
+
+    *) Security Concern & recommendation: Nothing  input validation or sanitization.By Validating and sanitizing all user inputs.
+
+3.  query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+    cursor.execute(query)
+
+    *) Security Concern & recommendation : This line is vulnerable to SQL Injection. By Using parameterized queries can  prevent SQL Injection vulnerable.
+
+4.  if user:
+        return "Logged in successfully"
+    else:
+        return "Invalid credentials"
+
+    *) Security Concern & recommendation : Plain text responses can be improved with more user-friendly messages.
+
+5.  return render_template_string('''
+     <form method="post">
+        Username: <input type="text" name="username"><br>
+        Password: <input type="password" name="password"><br>
+        <input type="submit" value="Login">
+     </form>
+    ''')
+
+    *) Security Concern & recommendation : Using render_template_string directly can be security issues. By using render_template with proper HTML templates.
+
+6.  if __name__ == '__main__':
+     app.run(debug=True)
+
+    *) Security Concern & recommendation : Running Flask in debug mode can lead the server to security risks. By not using debug=True in production.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
